@@ -16,11 +16,20 @@ public final class Logic {
             throws FigureNotFoundException, ImpossibleMoveException, OccupiedCellException {
         int index = findBy(source);
         Cell[] steps = figures[index].way(dest);
-        free(steps);
-        figures[index] = figures[index].copy(dest);
+        if (free(steps)) {
+            figures[index] = figures[index].copy(dest);
+        }
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
+        for (int i = 0; i < this.index; i++) {
+            for (Cell step: steps) {
+                if (step.equals(figures[i].position())) {
+                    throw new OccupiedCellException(
+                            String.format("Could not move by diagonal, conflict cell is %s", step));
+                }
+            }
+        }
         return true;
     }
 
