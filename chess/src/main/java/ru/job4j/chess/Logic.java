@@ -21,9 +21,9 @@ public final class Logic {
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
-        for (int i = 0; i < this.index; i++) {
+        for (Figure figure: figures) {
             for (Cell step: steps) {
-                if (step.equals(figures[i].position())) {
+                if (figure != null && step.equals(figure.position())) {
                     throw new OccupiedCellException(
                             String.format("Could not move by diagonal, conflict cell is %s", step));
                 }
